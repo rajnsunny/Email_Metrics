@@ -48,7 +48,7 @@ This project demonstrates the implementation of a real-time analytics API using 
 
 ## API Endpoints
 
-### POST /events
+### POST /event
 
 Receives real-time analytics events data when a user opens an email.
 
