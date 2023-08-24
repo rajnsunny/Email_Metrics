@@ -5,7 +5,12 @@ const Connection =  async() => {
 
     try{
         const redisClient = redis.createClient({
-            URL: process.env.REDIS_URL
+            password: process.env.REDIS_PASS,
+            socket:{
+                 host: process.env.REDIS_HOST,
+                port: process.env.REDIS_PORT
+            }
+           
         })
         redisClient.on('error', (error) => {
             console.error(`Redis Error: ${error}`);
