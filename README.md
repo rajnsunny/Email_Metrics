@@ -1,12 +1,12 @@
 ```markdown
-# Real-Time Analytics API using Node.js and MongoDB
+# Real-Time Analytics API using Node.js and Redis
 
-This project demonstrates the implementation of a real-time analytics API using Node.js and MongoDB. The API allows you to receive real-time events when a user opens an email and aggregates the events to provide analytics data.
+This project demonstrates the implementation of a real-time analytics API using Node.js and Redis. The API allows you to receive real-time events when a user opens an email and aggregates the events to provide analytics data.
 
 ## Features
 
 - Two API endpoints: `/events` for receiving real-time events and `/metrics` for aggregated analytics data.
-- Stores events data in a MongoDB database.
+- Stores events data in a Redis Caching (Ordered set respect with time).
 - Aggregates events data including timeseries for various metrics.
 - Supports detection of user devices (mobile, tablet, desktop) and country-wise event counts.
 
@@ -52,13 +52,47 @@ This project demonstrates the implementation of a real-time analytics API using 
 
 Receives real-time analytics events data when a user opens an email.
 
-Example event payload: [Event Payload Example](example_event_payload.json)
+Example event payload: https://gist.github.com/ferreiro/5a660040de7c13f7f24e1b75a2f9b20f#file-opened_events-json
 
 ### GET /metrics
 
 Returns an aggregated view of the events data including timeseries.
 
-Example response: [Metrics Response Example](example_metrics_response.json)
+Example response: {
+    "_id": "64e787757a237a65c7a19d86",
+    "open_by_countries": [
+        {
+            "country": "US",
+            "count": 2,
+            "_id": "64e787757a237a65c7a19d87"
+        },
+        {
+            "country": "IN",
+            "count": 1,
+            "_id": "64e788af2e3bad93b229f1ca"
+        }
+    ],
+    "open_by_devices": [
+        {
+            "deviceType": "Mobile",
+            "count": 2,
+            "_id": "64e787757a237a65c7a19d88"
+        },
+        {
+            "deviceType": "iPhone",
+            "count": 1,
+            "_id": "64e788b02e3bad93b229f1cd"
+        }
+    ],
+    "timestamps": [
+        {
+            "totalOpens": 3,
+            "time": "2023-08-24T16:38:00.000Z",
+            "_id": "64e787757a237a65c7a19d89"
+        }
+    ],
+    "__v": 0
+}
 
 ## Design
 ![Rough_Desing](https://github.com/rajnsunny/Email_Metrics/blob/main/Screenshot%202023-08-24%20225624.png)
