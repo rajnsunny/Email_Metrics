@@ -22,6 +22,9 @@ const EventTracker = async (req,res) => {
     else if(event.device.match(/Tablet|ipad/i)) devices = "Tablet";
     else devices = "Desktop";
 
+    const Data = Tracker.find({ TrackerId: "1234"});
+    Data.openby += 1;
+    await Data.save(); 
     // Update opens by countries
     
     // if(!Data){
@@ -130,7 +133,7 @@ Metrics.findOne({ 'open_by_countries.country': event.country })
     try {
         const redisClient =  await Connection();
         // await redisClient.connect();
-        redisClient.zAdd("inserted_events", {score: currentTimestamp,value: eventIdentifier});
+      //  redisClient.zAdd("inserted_events", {score: currentTimestamp,value: eventIdentifier});
 
         res.status(200).send({ msg: "success" });
     } catch (error) {

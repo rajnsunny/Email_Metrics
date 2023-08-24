@@ -12,8 +12,11 @@ const updateData = async () => {
 
     const minTimestamp = currentTimestamp - 60;
     
-    const openBy = client.zCount("inserted_events", minTimestamp, currentTimestamp)
-    
+  //  const openBy = client.zCount("inserted_events", minTimestamp, currentTimestamp)
+    const Data = Tracker.findOne({TrackerId: "1234"});
+       const openBy = Data.openby;
+        Data.openby = 0;
+       await Data.save();
         
     
 
