@@ -56,7 +56,7 @@ Example event payload: https://gist.github.com/ferreiro/5a660040de7c13f7f24e1b75
 
 ### GET /metrics
 
-Returns an aggregated view of the events data including timeseries.
+Returns an aggregated view of the events data including timeseries. ![example](https://json-parser.com/49fdda45/1)
 
 Example response: {
     "_id": "64e787757a237a65c7a19d86",
