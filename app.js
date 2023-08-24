@@ -16,11 +16,6 @@ app.use('',Metrics);
 const intervalTime = 60 * 1000; // 1 minute in milliseconds
 const updateInterval = setInterval(updateDataInDatabase, intervalTime);
 
-process.on('SIGINT', () => {
-    clearInterval(updateInterval);
-    console.log('Server is shutting down.');
-    process.exit();
-});
 
 
 app.listen(PORT,() => {
