@@ -22,9 +22,17 @@ const EventTracker = async (req,res) => {
     else if(event.device.match(/Tablet|ipad/i)) devices = "Tablet";
     else devices = "Desktop";
 
-    const Data = Tracker.find({ TrackerId: "1234"});
-    Data.openby += 1;
-    await Data.save(); 
+    Tracker.findOneAndUpdate(
+      {TrackerId: "1234"},
+      {$inc: {openby: 1}},
+      {new : true}
+
+  ).then(() => {
+      console.log('Added.');
+    })
+    .catch((error) => {
+      console.error('Error creating new entry:', error);
+    });
     // Update opens by countries
     
     // if(!Data){

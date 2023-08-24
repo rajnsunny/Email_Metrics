@@ -13,18 +13,38 @@ const updateData = async () => {
     const minTimestamp = currentTimestamp - 60;
     
   //  const openBy = client.zCount("inserted_events", minTimestamp, currentTimestamp)
-    const Data = Tracker.findOne({TrackerId: "1234"});
-       const openBy = Data.openby;
-        Data.openby = 0;
-       await Data.save();
-        
-    
+  const Data = await Tracker.findOne({TrackerId: "1234"});
+       
+  const openBy = Data.openby;
+  
+  Tracker.findOneAndUpdate(
+   {TrackerId: "1234"},
+   {$set: {openby: 0}},
+   { new : true},
+  ).then(() => {
+   console.log('Updated Tracker.');
+ })
+ .catch((error) => {
+   console.error('Error creating new entry:', error);
+ });
+  
 
-    
-    await Metrics.updateOne(
-       { $push: {timestamps: {totalOpens: openBy, time: format(new Date()), }}},
-       { upsert: true }
-    )
+
+
+Metrics.updateOne(
+   {},
+   {
+     $push: { timestamps: { totalOpens: Data.openby, time: format(new Date()) } }
+   },
+   { upsert: true }
+ )
+   .then(() => {
+     console.log('New entry created for TImeStamp.');
+   })
+   .catch((error) => {
+     console.error('Error creating new entry:', error);
+   });
+
 
 }
 
