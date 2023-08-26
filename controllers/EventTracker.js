@@ -35,29 +35,29 @@ const EventTracker = async (req,res) => {
     });
     // Update opens by countries
     
-    // if(!Data){
-    //     await new Metrics({
-    //         open_by_countries:[
-    //             {
-    //                 country: event.country,
-    //                 count: 1
-    //             }
-    //         ],
-    //         open_by_devices:[
-    //             {
-    //                 deviceType: devices,
-    //                 count:1
-    //             }
-    //         ],
-    //         timestamps:[
-    //             {
-    //                 totalOpens: 1,
-    //                 time: format(new Date())
-    //             }
-    //         ]
-    //     }).save()
-    // }
-    // else{
+    const Data = await Metrics.find({});
+    if(Data.length == 0){
+        await new Metrics({
+            open_by_countries:[
+                {
+                    country: event.country,
+                    count: 1
+                }
+            ],
+            open_by_devices:[
+                {
+                    deviceType: devices,
+                    count:1
+                }
+            ],
+            timestamps:[
+                {
+                    totalOpens: 1,
+                    time: format(new Date())
+                }
+            ]
+        }).save()
+    }
 
 
 // Check if the data already exists in opens by countries
